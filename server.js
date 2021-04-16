@@ -7,10 +7,7 @@ dotenv.config({path:'./.env'});
 
 const app = express();
 
-
 app.use(bodyParse.json());
-
-
 
 app.use('/',(req,res)=>{
 
@@ -22,8 +19,8 @@ app.use('/',(req,res)=>{
 })
 
 const databaseUrl= process.env.DATABASE;
-// console.log(databaseUrl)
-mongoose.connect(databaseUrl,{useNewUrlParser:true, useCreateIndex:true,useUnifiedTopology:true, useFindAndModify:false}).then(()=>console.log("DB Connected Succefully"))
+
+mongoose.connect(databaseUrl,{useNewUrlParser:true, useCreateIndex:true,useUnifiedTopology:true, useFindAndModify:false}).then(()=>console.log("DataBase Connected Succefully"))
 
 
 const port = process.env.PORT;
