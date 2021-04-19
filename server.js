@@ -13,7 +13,7 @@ app.use('/',(req,res)=>{
 
    
     res.status(200).send({
-        statu:200,
+        status:200,
         message:"Real Job routes not exist"
     })
 })
