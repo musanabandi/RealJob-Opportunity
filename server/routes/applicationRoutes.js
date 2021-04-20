@@ -1,10 +1,14 @@
 import express from 'express';
-import applicationController from '../controller/applicationController';
-import Validator from "../middleware/validator";
+import applyController from '../controller/applicationController';
+//import Validator from "../middleware/validator";
 
 
-const router  = express.Router();
-router.post('/application/createApplication',applicationController.createApplication);
+const applicationRoute  = express.Router();
+applicationRoute .post('/application/createApplication',applyController.createApplication);
+applicationRoute .get('/application/getAllApplication/:id',applyController.getAllApplication);
+applicationRoute .get('/application/getOneApplication/:id',applyController.getOneApplication);
+applicationRoute .delete('/application/deleteOneApplication/:id',applyController.deleteOneApplication);
+applicationRoute .patch('/application/updateOneApplication/:id',applyController.updateOneApplication);
 
 
-export default router;
+export default applicationRoute;

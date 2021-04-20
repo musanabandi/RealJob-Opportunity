@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
 const applicationSchema = new mongoose.Schema(
   {
-    jobId: { type: String, required: [true] },
-    userId: { type:string},
+    jobId: { type: String}, //required: [true] },
+    userId: { type:String},
 
         timeApplication:{ type: String },
 

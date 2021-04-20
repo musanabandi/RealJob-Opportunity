@@ -1,11 +1,6 @@
 class Response {
 
-    /**
-     * 
-     * succes message
-     * @body res, message, data, status
-     * @return status, message 
-     */
+  
 
     static successMessage(res, message, data = null, status){
 

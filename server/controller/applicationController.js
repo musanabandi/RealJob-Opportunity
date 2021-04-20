@@ -1,5 +1,6 @@
-import applicationData from '../model/applicatiomModel';
-class applicationController {
+import applicationData from '../model/applicationModel';
+import Response from '../Helpers/response';
+class applyController {
 
     static createApplication = async (req, res) => {
 
@@ -18,12 +19,12 @@ class applicationController {
             return Response.errorMessage(res,"application failed to be created", 417)
            
         }
-         return Response.successMessage(res, "application created is successfull", data,201)}
+         return Response.successMessage(res, "application created is successfull", {data},201)}
 
     static getAllApplication = async (req, res) => {
         
         const data = await applicationData.find();
-       return Response.successMessage(res, "this is all your applications",data, 200)
+       return Response.successMessage(res, "this is all your applications",{data}, 200)
         
     }
 
@@ -36,7 +37,7 @@ class applicationController {
             return Response.errorMessage(res, "there is no  one application", 417)
             
         }
-        return Response.successMessage(res,"you have got one Application", data,201)
+        return Response.successMessage(res,"you have got one Application", {data},201)
             
     }
 
@@ -52,7 +53,7 @@ class applicationController {
         return Response.successMessage(res,"deleted successfully",{data},201)
         
     }
-    static updateOneBlog = async (req, res) => {
+    static updateOneApplication = async (req, res) => {
         const applicationid = req.params.id;
 
         let {
@@ -61,20 +62,20 @@ class applicationController {
 
 
         
-        const data = await blogData.findByIdAndUpdate(applicationid, {
+        const data = await applicationData.findByIdAndUpdate(applicationid, {
             jobTitle: jobTitle,
         });
 
 
         if (!data) {
-            return Response.errorMessage(res, "update failed",data, 417)
+            return Response.errorMessage(res, "update failed",{data}, 417)
             
         }
 
 
 
-        const applicationUpdated= await applicationData.findById(blogid)
-        return Response.successMessage(res, "updated is successfully",data,200)
+        const applicationUpdated= await applicationData.findById(applicationid)
+        return Response.successMessage(res, "updated is successfully",{data},200)
         
     }
 }
@@ -83,5 +84,5 @@ class applicationController {
 
 
 
-export default applicationController;
+export default applyController;
 

@@ -5,6 +5,10 @@ import mongoose from 'mongoose'
 
 import categoryRoute from './server/routes/categoryRoute';
 import profileRoute from './server/routes/profileRoute';
+import applicationRoute from './server/routes/applicationRoutes';
+
+
+
 
 dotenv.config({path:'./.env'});
 
@@ -14,6 +18,7 @@ app.use(bodyParse.json());
 
 app.use('/api/v1/category/dash',categoryRoute);
 app.use('/api/v1/profile',profileRoute);
+app.use('/api/v1/application',applicationRoute);
 
 app.use('/',(req,res)=>{
 
