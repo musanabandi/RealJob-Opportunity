@@ -2,7 +2,7 @@ import express from "express";
 import bodyParse from "body-parser";
 import dotenv from 'dotenv';
 import mongoose from 'mongoose'
-
+import AuthRoute from './server/routes/AuthRoute';
 import categoryRoute from './server/routes/categoryRoute';
 import profileRoute from './server/routes/profileRoute';
 
@@ -11,7 +11,7 @@ dotenv.config({path:'./.env'});
 const app = express();
 
 app.use(bodyParse.json());
-
+app.use('/api/v1/realJob',AuthRoute);
 app.use('/api/v1/category/dash',categoryRoute);
 app.use('/api/v1/profile',profileRoute);
 
@@ -26,7 +26,7 @@ app.use('/',(req,res)=>{
 
 const databaseUrl= process.env.DATABASE;
 
-mongoose.connect(databaseUrl,{useNewUrlParser:true, useCreateIndex:true,useUnifiedTopology:true, useFindAndModify:false}).then(()=>console.log("Database Connected Succefully"))
+mongoose.connect(databaseUrl,{useNewUrlParser:true, useCreateIndex:true,useUnifiedTopology:true, useFindAndModify:false}).then(()=>console.log("Database Connected Successfully"))
 
 
 const port = process.env.PORT;

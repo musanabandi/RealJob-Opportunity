@@ -7,7 +7,7 @@ categoryRouter.post('/create', CategoryController.createCategory);
 categoryRouter.get('/all', CategoryController.getAllCategory);
 categoryRouter.get('/getOne/:id', CategoryController.getOneCategory);
 categoryRouter.delete('/delete/:id', CategoryController.deleteOneCategory);
-categoryRouter.patch(' :id', CategoryController.updateCategory)
+categoryRouter.patch('/update:id', CategoryController.updateCategory)
 
 
 export default categoryRouter;
