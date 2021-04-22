@@ -6,15 +6,16 @@ const profileSchema = new mongoose.Schema({
 
   portifolio: {type:String, require:true},
     
-   socialMediasLink:{
+   socialMediasLink: {type:String },
+   
+   userId: {
+    type: mongoose.Schema.ObjectId,
 
-     twitter:{type:String },
-     facebook:{type:String},
-     instagram:{type:String},
-     telegram:{type:String},
-     whatsapp:{type:String}
+ ref: "user",
 
-   } 
+ required:[true, "user is required"]
+
+},
 
 });
  
