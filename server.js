@@ -5,7 +5,7 @@ import mongoose from 'mongoose'
 
 import categoryRoute from './server/routes/categoryRoute';
 import profileRoute from './server/routes/profileRoute';
-
+import jobRoute from './server/routes/jobRoute';
 dotenv.config({path:'./.env'});
 
 const app = express();
@@ -14,6 +14,7 @@ app.use(bodyParse.json());
 
 app.use('/api/v1/category/dash',categoryRoute);
 app.use('/api/v1/profile',profileRoute);
+app.use('/api/v1/jobPost',jobRoute);
 
 app.use('/',(req,res)=>{
 
@@ -23,6 +24,57 @@ app.use('/',(req,res)=>{
         message:"Real Job routes not exist"
     })
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const databaseUrl= process.env.DATABASE;
 
