@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     },
   
     address: {type:String,
-        "country":["kigali","masaka"]},
+    },
     
     email: {
         type: String},

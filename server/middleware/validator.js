@@ -1,5 +1,5 @@
 import { check, validationResult } from "express-validator";
-import profileInfo from "../model/profileModel";
+import UserData from "../model/UserModel.js";
 import Response from "../helpers/response";
 class validator {
 
@@ -9,9 +9,9 @@ class validator {
 
         const userIdFromToken = req.body.userId;
         
-        const profileIdFromParams = req.params.id;
+      
         
-        const profile = await profileInfo.findById(profileIdFromParams);
+        const profile = await UserData.findById(userIdFromToken);
         console.log(profile)
         
 
@@ -22,7 +22,9 @@ class validator {
         }
 
         else if (userIdFromToken == profile.userId) {
-            
+
+
+            req.body.user= profile;
             return next();
             
 
@@ -31,6 +33,19 @@ class validator {
         return Response.errorMessage(res,"You Are Not Authorised",401)
 
     }
+
+static verifyRole =function(requiredRole){
+    return async(req,res,next)=>{
+   let {role }=req.body.user;
+   if(requiredRole !== role){
+       return Response.errorMessage(res, "you don't have access to this route, please contact admin",401)
+   }
+   next();
+    }
+
+}
+
+
     
 
     static newAccountRules() {

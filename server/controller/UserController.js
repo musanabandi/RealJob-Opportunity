@@ -95,7 +95,7 @@ class UserAuthantication {
 
     }
 
-    //sign in
+    
 
     static signin = async (req, res) => {
 
@@ -106,7 +106,7 @@ class UserAuthantication {
 
         if(!isUserExist){
 
-        isUserExist =await UserData.findOne({phone:email});}
+        isUserExist =await UserData.findOne({phone:phone});}
 
 
        if (isUserExist && bcrypt.compareSync(password, isUserExist.password)) {
