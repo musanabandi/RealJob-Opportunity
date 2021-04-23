@@ -2,18 +2,25 @@ import mongoose from 'mongoose'
 const applicationSchema = new mongoose.Schema(
   {
     jobId: { type: String}, //required: [true] },
-    userId: { type:String},
+    userId: { type:String,
+      ref:"user",
+      required:[true,"user is required"]
+    },
 
         timeApplication:{ type: String },
 
         sendingStatus:{
           type: String,
-          enum: ["pending","canceled", "received" ]
+          enum: ["pending","canceled", "received" ],
+          default:'pending',
+          updated:'canceled'
         },
 
         status:{
           type: String,
-          enum: ["pending","canceled", "rejected","admitted" ]
+          enum: ["pending","canceled", "rejected","admitted" ],
+          default:'pending',
+          updated:'canceled'
         }
 
     })
