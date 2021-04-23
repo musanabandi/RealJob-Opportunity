@@ -1,5 +1,5 @@
 import { check, validationResult } from "express-validator";
-import profileInfo from "../model/profileModel";
+import UserData from "../model/UserModel";
 import Response from "../helpers/response";
 class validator {
 
@@ -9,11 +9,11 @@ class validator {
 
         const userIdFromToken = req.body.userId;
         
-        const profileIdFromParams = req.params.id;
         
-        const profile = await profileInfo.findById(profileIdFromParams);
-        console.log(profile)
         
+        const profile = await UserData.findById(userIdFromToken);
+        
+        console.log(profile )
 
         if (!profile) {
 
@@ -21,16 +21,33 @@ class validator {
            
         }
 
-        else if (userIdFromToken == profile.userId) {
+        else if (userIdFromToken == profile._id) {
+            req.body.user =profile;
             
             return next();
-            
+               
 
         }
 
         return Response.errorMessage(res,"You Are Not Authorised",401)
 
     }
+
+
+static verifyRole = function(requiredRole){
+
+    return async (req,res,next)=>{
+
+        let{role}=req.body.user;
+
+        if(requiredRole !== role){
+
+    return Response.errorMessage(res, "You Don't Have Access To This Route, Please Contact Admin",401)
+        }
+        next();
+    }
+}
+
     
 
     static newAccountRules() {
@@ -42,7 +59,7 @@ class validator {
         check("email", "Email is not Valid").isEmail(),
         check("password", "Password must be Strong").isStrongPassword(),
         check("phone", "Phone Number is not Valid").isMobilePhone(),
-        check("role", "role must be user or admin").isIn(["jobSeeker", "jobProvider"]),];
+        check("role", "role must be user or admin").isIn(["jobSeeker", "jobProvider","admin"]),];
     }
 
     static newSignInRules() {
@@ -61,7 +78,7 @@ class validator {
         if (!errors.isEmpty()) {
             const errorMessage = errors.errors.map(e => e.msg);
 
-            return Response.errorMessage(res,"Error Message",400)
+            return Response.errorMessage(res,errorMessage,400)
 
         }
 
