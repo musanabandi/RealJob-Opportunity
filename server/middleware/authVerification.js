@@ -22,8 +22,7 @@ export const verifyAuth =async (req,res,next)=>{
         if(!data){
 
             return Response.errorMessage(res,"Please Provide True Credentials",404)
-
-           
+    
         }
 
         if(user.passwordChangedTime != data.passwordChangedTime){
@@ -32,12 +31,10 @@ export const verifyAuth =async (req,res,next)=>{
     
         
         req.body.userId =user.id;
-<<<<<<< HEAD
+
         req.body.user =user;
     
-=======
-    req.body.user= data;
->>>>>>> ac121ceeba204325b56f7e79527b6b15c15a2165
+
          return next();
     
     
