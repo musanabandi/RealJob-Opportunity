@@ -106,7 +106,7 @@ class ProfileController {
     return Response.successMessage(res, "Updated Successfully",{profileUpdate},201)
       
 
-        }  
+        }                                         
 }
 
 export default ProfileController ;

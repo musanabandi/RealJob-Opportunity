@@ -22,8 +22,9 @@ class applyController {
          return Response.successMessage(res, "application created is successfull", {data},201)}
 
     static getAllApplication = async (req, res) => {
-        
-        const data = await applicationData.find();
+        const userId=req.body.userId;
+        console.log(userId)
+        const data = await applicationData.find({userId:userId});
        return Response.successMessage(res, "this is all your applications",{data}, 200)
         
     }
@@ -53,29 +54,33 @@ class applyController {
         return Response.successMessage(res,"deleted successfully",{data},201)
         
     }
-    static updateOneApplication = async (req, res) => {
+    
+
+    static cancelApplication = async (req, res) => {
         const applicationid = req.params.id;
 
         let {
-            jobTitle,
+            jobTitle
         } = req.body;
 
 
         
         const data = await applicationData.findByIdAndUpdate(applicationid, {
-            jobTitle: jobTitle,
+        sendingStatus:'canceled',
+        status:'canceled'
+            
         });
 
 
         if (!data) {
-            return Response.errorMessage(res, "update failed",{data}, 417)
+            return Response.errorMessage(res, "cancel failed",{data}, 417)
             
         }
 
 
 
         const applicationUpdated= await applicationData.findById(applicationid)
-        return Response.successMessage(res, "updated is successfully",{data},200)
+        return Response.successMessage(res, "cancel is successfully",{data},200)
         
     }
 }

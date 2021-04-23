@@ -32,8 +32,11 @@ export const verifyAuth =async (req,res,next)=>{
     
         
         req.body.userId =user.id;
+
         req.body.user =user;
     
+    req.body.user= data;
+
          return next();
     
     
