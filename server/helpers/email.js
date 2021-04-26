@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config()
+
 const {EMAIL_ADDRESS}= process.env;
 class Email{
 static WelcomeEmail(user){

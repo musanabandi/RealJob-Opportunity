@@ -43,6 +43,12 @@ const jobPostSchema = new mongoose.Schema(
             type: mongoose.Schema.ObjectId,
             ref:"application",
            required:[true, "applicationId is required"]
+        },
+
+        profileId : {
+            type: mongoose.Schema.ObjectId,
+            ref:"profile",
+           required:[true, "profileId is required"]
         }
 
     }

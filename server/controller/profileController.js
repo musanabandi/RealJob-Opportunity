@@ -76,8 +76,6 @@ class ProfileController {
     }
 
 
-
-
     static updateProfile= async (req,res)=>{
 
         const profileId=req.params.id;

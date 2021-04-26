@@ -22,6 +22,7 @@ class applyController {
          return Response.successMessage(res, "application created is successfull", {data},201)}
 
     static getAllApplication = async (req, res) => {
+        
         const userId=req.body.userId;
         console.log(userId)
         const data = await applicationData.find({userId:userId});
