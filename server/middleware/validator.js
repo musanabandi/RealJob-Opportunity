@@ -1,5 +1,7 @@
 import { check, validationResult } from "express-validator";
 import profileInfo from "../model/profileModel";
+import UserData from "../model/UserModel";
+import jobPostData from "../model/jobModel";
 import Response from "../helpers/response";
 class validator {
 
@@ -32,7 +34,7 @@ class validator {
 
     }
     
-
+                    
     static newAccountRules() {
 
         return [check("firstName", "FirstName must be Invalid").isAlpha(),
@@ -61,7 +63,7 @@ class validator {
         if (!errors.isEmpty()) {
             const errorMessage = errors.errors.map(e => e.msg);
 
-            return Response.errorMessage(res,"Error Message",400)
+            return Response.errorMessage(res,"errorMessage",400)
 
         }
 

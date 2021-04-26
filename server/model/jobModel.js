@@ -2,28 +2,48 @@ import mongoose from 'mongoose'
 const jobPostSchema = new mongoose.Schema(
     {
         jobTitle: { type: String, required: [true,] },
+
         jobDescription: { type: String, required: true},
-        categoryId: { type:String,
-            required:[true,]
+
+        categoryId: { type:mongoose.Schema.ObjectId,
+
+            ref:"category",
+            required:[true, "jobCategory id is required"]
+            
         },
 
-        userId: { type:String,
+        userId: { type:mongoose.Schema.ObjectId,
+            ref:"user",
+           required:[true, "userId is required"]
             
             
         },
         postedTime: {
-            type: String
+            type: String,
+            default: Date.now()
         },
         postedDeadLine: {
-            type: String
+            type: String,
+            default: Date.now()
         },
         isActive: {
             type: String
         },
 
-        applicationId : { type:String
-            
+        receivedStatus:{
+            type:String,
+            enum: ["received"]
         },
+        Status:{
+            type:String,
+            enum: ["admitted","rejected"]
+        },
+        
+        applicationId : {
+            type: mongoose.Schema.ObjectId,
+            ref:"application",
+           required:[true, "applicationId is required"]
+        }
 
     }
 );

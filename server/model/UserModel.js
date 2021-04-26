@@ -10,8 +10,7 @@ const userSchema = new mongoose.Schema({
         enum: ["male", "female"]
     },
   
-    address: {type:String,
-        "country":["kigali","masaka"]},
+    address: {type:String},
     
     email: {
         type: String},
