@@ -8,6 +8,37 @@ class validator {
 
 const userIdFromToken = req.body.userId;
 
+        const userIdFromToken = req.body.userId;
+
+        const profile = await UserData.findById(userIdFromToken);
+        console.log(profile)
+
+        //const profiles = await UserData.findById(userIdFromToken);
+
+        //console.log(profile)
+
+        if (!profile) {
+
+            return Response.errorMessage(res, "Profile Not Exist", 404)
+
+        }
+
+         if (userIdFromToken == profile._id) {
+            req.body.user = profile;
+           
+         if (userIdFromToken == profile.userId) {
+const profile = await UserData.findById(userIdFromToken);
+        console.log(profile)
+
+                if (!profile) {
+
+                req.body.user = profile;
+                return next();
+
+            return Response.errorMessage(res, "Profile Not Exist", 404)
+            }
+
+            return Response.errorMessage(res, "You Are Not Authorised", 401)
 const profile = await UserData.findById(userIdFromToken);
         console.log(profile)
 
@@ -17,7 +48,16 @@ const profile = await UserData.findById(userIdFromToken);
             return Response.errorMessage(res, "Profile Not Exist", 404)
 
         }
+    }
 
+
+static verifyRole = function (requiredRole) {
+
+        return async (req, res, next) => {
+
+            let { role } = req.body.user;
+
+            if (requiredRole !== role) {
 
         else if (userIdFromToken == profile._id) {
             req.body.user = profile;
@@ -30,6 +70,7 @@ const profile = await UserData.findById(userIdFromToken);
             }
 
 
+
 static verifyRole = function (requiredRole) {
 
         return async (req, res, next) => {
@@ -37,6 +78,17 @@ static verifyRole = function (requiredRole) {
             let { role } = req.body.user;
 
             if (requiredRole !== role) {
+
+
+
+static verifyRole = function (requiredRole) {
+
+        return async (req, res, next) => {
+
+            let { role } = req.body.user;
+
+            if (requiredRole !== role) {
+
 
                 return Response.errorMessage(res, "You Don't Have Access To This Route, Please Contact Admin", 401)
             }
@@ -54,7 +106,6 @@ static verifyRole = function (requiredRole) {
         }
 
     }
-
 
 
 
