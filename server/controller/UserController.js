@@ -1,6 +1,7 @@
 import UserData from '../model/UserModel';
 import { generateAuthToken } from "../helpers/token";
 import bcrypt from "bcrypt";
+import EmailHelper from "../Helpers/emailTemplate"
 import Response from "../helpers/response";
 
 
@@ -86,10 +87,11 @@ class UserAuthantication {
         }
 
         else {
-            let { password, ...userData } = data._doc;
+            let { password, ...datawithoutpassword } = data._doc;
+            await EmailHelper.userWelcomeEmail(datawithoutpassword);
 
             
-         return Response.successMessage(res, "Account Created Succesfully",{userData},201)
+         return Response.successMessage(res, "Account Created Succesfully",datawithoutpassword,201)
 
 
         }
