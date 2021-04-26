@@ -1,5 +1,4 @@
- 
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const profileSchema = new mongoose.Schema({
   profilePicture: {type:String, require:true},
@@ -8,6 +7,7 @@ const profileSchema = new mongoose.Schema({
     
    socialMediasLink: {type:String },
    
+   
    userId: {
     type: mongoose.Schema.ObjectId,
 
@@ -15,9 +15,22 @@ const profileSchema = new mongoose.Schema({
 
  required:[true, "user is required"]
 
-},
+}
 
-});
+})
+
+
+profileSchema.pre(/^find/, function(next){
+
+  this.populate({
+      path:"userId",
+      select:"firstName lastName phone address"
+  })
+  
+
+  next();
+
+})
  
 const profileInfo = mongoose.model("profile",profileSchema);
 export default profileInfo;

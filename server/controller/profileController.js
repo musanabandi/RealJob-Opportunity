@@ -11,6 +11,7 @@ class ProfileController {
             portifolio,
             socialMediasLink
             
+            
         } = req.body;
  
         const profile = await profileInfo.create(req.body);

@@ -22,23 +22,16 @@ const userSchema = new mongoose.Schema({
     },
 
     phone: {
-        type: String },
+        type: Number },
 
    
     role: {
         type: String,
-        enum: ["jobSeeker", "jobProvider"],
+        enum: ["jobSeeker", "jobProvider", "admin"],
 
         required:[true, "role is required"],
-        default:"jobSeeker"
+        default:"jobSeeker" 
     },
-
-    profileId: {type: mongoose.Schema.ObjectId,
-
-        ref: "profile",
-    
-        },
-
 
      isActive:{
          type:Boolean,

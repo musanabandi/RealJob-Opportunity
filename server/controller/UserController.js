@@ -1,6 +1,7 @@
 import UserData from '../model/UserModel';
 import { generateAuthToken } from "../helpers/token";
 import bcrypt from "bcrypt";
+import EmailHelper from "../Helpers/emailTemplate"
 import Response from "../helpers/response";
 
 
@@ -8,21 +9,23 @@ class UserAuthantication {
 
 
     static changePassword = async (req,res)=>{
+
         let {
             oldPassword,
             newPassword,
             confirmPassword
+            
         }=req.body;
 
         const userId = req.body.userId;
         const userDetails = await UserData.findById(userId);
-        console.log(userDetails)
+        
 
         if(bcrypt.compareSync(oldPassword, userDetails.password)){
 
             if(newPassword === confirmPassword){
-
-                const password = bcrypt.hashSync(newPassword, 20);
+ 
+                const password = bcrypt.hashSync(newPassword, 15);
                 const passwordChangedTime = Date.now()
                 const userUpdated = await UserData.findByIdAndUpdate(userId,{
 
@@ -59,7 +62,7 @@ class UserAuthantication {
         } = req.body;
 
 
-        password = bcrypt.hashSync(password, 10)
+        password = bcrypt.hashSync(password, 15)
 
         const isEmailExist = await UserData.findOne({email:email}||{phone:phone});
 
@@ -84,10 +87,11 @@ class UserAuthantication {
         }
 
         else {
-            let { password, ...userData } = data._doc;
+            let { password, ...datawithoutpassword } = data._doc;
+            await EmailHelper.userWelcomeEmail(datawithoutpassword);
 
             
-         return Response.successMessage(res, "Account Created Succesfully",{userData},201)
+         return Response.successMessage(res, "Account Created Succesfully",datawithoutpassword,201)
 
 
         }
@@ -95,7 +99,7 @@ class UserAuthantication {
 
     }
 
-    //sign in
+    
 
     static signin = async (req, res) => {
 
@@ -106,7 +110,7 @@ class UserAuthantication {
 
         if(!isUserExist){
 
-        isUserExist =await UserData.findOne({phone:email});}
+        isUserExist =await UserData.findOne({phone:phone});}
 
 
        if (isUserExist && bcrypt.compareSync(password, isUserExist.password)) {
