@@ -1,19 +1,22 @@
 import express from 'express';
 import jobController from '../controller/jobController';
 
+import validator from '../middleware/validator';
+import {verifyAuth} from '../middleware/authVerification';
+
 
 const jobRouter  = express.Router();
-jobRouter.post('/createjobPost',jobController.createjobpost);
+jobRouter.post('/createjobPost',verifyAuth, jobController.createjobpost);
 
-jobRouter.get('/getAllpostedJob/:id', jobController.getAllpostedJob);
-jobRouter.delete('/deletepostedJob/:id', jobController.deleteOnepostedJob);
+jobRouter.get('/getAllpostedJob',verifyAuth, jobController.getAllpostedJob);
+jobRouter.delete('/deletepostedJob/:id',verifyAuth, jobController.deleteOnepostedJob);
 
-jobRouter.get('/getOnepostedJob/:id', jobController.getOnepostedJob);
+jobRouter.get('/getOnepostedJob/:id', verifyAuth, jobController.getOnepostedJob);
 
-jobRouter.patch('/updatepostedJob/:id', jobController.updatepostedJob)
+jobRouter.patch('/updatepostedJob/:id',verifyAuth, jobController.updatepostedJob)
 
-
-
+jobRouter.get('/getAllapplication', verifyAuth, jobController.getAllpostedJob);
+jobRouter.patch('/applicationstatus/:id', verifyAuth, jobController.receivedpostedJob)
 
 
 

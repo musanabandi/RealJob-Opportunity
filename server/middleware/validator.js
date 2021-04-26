@@ -1,5 +1,11 @@
 import { check, validationResult } from "express-validator";
+
+import profileInfo from "../model/profileModel";
 import UserData from "../model/UserModel";
+import jobPostData from "../model/jobModel";
+
+import UserData from "../model/UserModel";
+
 import Response from "../helpers/response";
 class validator {
 
@@ -107,8 +113,6 @@ static verifyRole = function (requiredRole) {
 
     }
 
-
-
     static newAccountRules() {
 
         return [check("firstName", "FirstName must be Invalid").isAlpha(),
@@ -136,6 +140,8 @@ static verifyRole = function (requiredRole) {
 
         if (!errors.isEmpty()) {
             const errorMessage = errors.errors.map(e => e.msg);
+
+            return Response.errorMessage(res,"errorMessage",400)
 
             return Response.errorMessage(res, errorMessage, 400)
 
