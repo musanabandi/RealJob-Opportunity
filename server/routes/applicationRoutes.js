@@ -13,7 +13,4 @@ applicationRoute .patch('/cancel/:id',verifyAuth,Validator.verifyRole('jobSeeker
 
 export default applicationRoute;
 
-//verifyAccess / validator is on delete and update and creation of apllication :
- 
-//verifyauth is all routes well done remain is to copy and paste on route
-//
+

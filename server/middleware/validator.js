@@ -1,117 +1,45 @@
 import { check, validationResult } from "express-validator";
-
-import profileInfo from "../model/profileModel";
 import UserData from "../model/UserModel";
-import jobPostData from "../model/jobModel";
-
-import UserData from "../model/UserModel";
-
 import Response from "../helpers/response";
 class validator {
 
 
+    
     static verifyAccess = async (req, res, next) => {
 
-const userIdFromToken = req.body.userId;
-
         const userIdFromToken = req.body.userId;
-
-        const profile = await UserData.findById(userIdFromToken);
-        console.log(profile)
-
-        //const profiles = await UserData.findById(userIdFromToken);
-
-        //console.log(profile)
-
-        if (!profile) {
-
-            return Response.errorMessage(res, "Profile Not Exist", 404)
-
-        }
-
-         if (userIdFromToken == profile._id) {
-            req.body.user = profile;
-           
-         if (userIdFromToken == profile.userId) {
-const profile = await UserData.findById(userIdFromToken);
-        console.log(profile)
-
-                if (!profile) {
-
-                req.body.user = profile;
-                return next();
-
-            return Response.errorMessage(res, "Profile Not Exist", 404)
+        
+        const profile = await UserData.findById(userIdFromToken);        
+                        if (!profile) {
+        
+                    return Response.errorMessage(res, "Profile Not Exist", 404)
+        
+                }
+        
+        
+                else if (userIdFromToken == profile._id) {
+                    req.body.user = profile;
+                    
+               return next();
             }
-
+        
             return Response.errorMessage(res, "You Are Not Authorised", 401)
-const profile = await UserData.findById(userIdFromToken);
-        console.log(profile)
-
-
-                if (!profile) {
-
-            return Response.errorMessage(res, "Profile Not Exist", 404)
-
-        }
-    }
-
-
-static verifyRole = function (requiredRole) {
-
-        return async (req, res, next) => {
-
-            let { role } = req.body.user;
-
-            if (requiredRole !== role) {
-
-        else if (userIdFromToken == profile._id) {
-            req.body.user = profile;
-            
-       return next();
-    }
-
-    return Response.errorMessage(res, "You Are Not Authorised", 401)
-
+        
+                    }
+        
+        
+        
+        
+            static verifyRole = function (requiredRole) {
+                return async (req, res, next) => {
+                    let { role } = req.body.user;
+                    if (requiredRole !== role) {
+                        return Response.errorMessage(res, "you don't have access to this route, please contact admin", 401)
+                    }
+                    next();
+                }
+        
             }
-
-
-
-static verifyRole = function (requiredRole) {
-
-        return async (req, res, next) => {
-
-            let { role } = req.body.user;
-
-            if (requiredRole !== role) {
-
-
-
-static verifyRole = function (requiredRole) {
-
-        return async (req, res, next) => {
-
-            let { role } = req.body.user;
-
-            if (requiredRole !== role) {
-
-
-                return Response.errorMessage(res, "You Don't Have Access To This Route, Please Contact Admin", 401)
-            }
-            next();
-        }
-    }
-
-    static verifyRole = function (requiredRole) {
-        return async (req, res, next) => {
-            let { role } = req.body.user;
-            if (requiredRole !== role) {
-                return Response.errorMessage(res, "you don't have access to this route, please contact admin", 401)
-            }
-            next();
-        }
-
-    }
 
     static newAccountRules() {
 
@@ -139,11 +67,10 @@ static verifyRole = function (requiredRole) {
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
+            
             const errorMessage = errors.errors.map(e => e.msg);
 
             return Response.errorMessage(res,"errorMessage",400)
-
-            return Response.errorMessage(res, errorMessage, 400)
 
         }
 
