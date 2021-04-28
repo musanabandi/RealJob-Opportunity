@@ -5,11 +5,11 @@ import Validator from "../middleware/validator";
 
 
 const applicationRoute  = express.Router();
-applicationRoute .post('/createApplication',verifyAuth,Validator.verifyRole('jobSeeker'),applyController.createApplication);
-applicationRoute .get('/getAllApplication',verifyAuth,applyController.getAllApplication);
-applicationRoute .get('/getOneApplication/:id',verifyAuth,applyController.getOneApplication);
-applicationRoute .delete('/deleteOneApplication/:id',verifyAuth,applyController.deleteOneApplication);
-applicationRoute .patch('/cancel/:id',verifyAuth,Validator.verifyRole('jobSeeker'),applyController.cancelApplication);
+applicationRoute .post('/application/create',verifyAuth,Validator.verifyRole('jobSeeker'),applyController.createApplication);
+applicationRoute .get('/application',verifyAuth,applyController.getAllApplication);
+applicationRoute .get('/application/:id',verifyAuth,applyController.getOneApplication);
+applicationRoute .delete('/application/:id',verifyAuth,applyController.deleteOneApplication);
+applicationRoute .patch('/application/:id',verifyAuth,Validator.verifyRole('jobSeeker'),applyController.cancelApplication);
 
 export default applicationRoute;
 

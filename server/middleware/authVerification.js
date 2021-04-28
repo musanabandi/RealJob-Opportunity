@@ -41,7 +41,7 @@ export const verifyAuth =async (req,res,next)=>{
     }catch(e)
     
     {
-        console.log(e)
+        // console.log(e)
 
         return Response.errorMessage(res,"Invalid Token",404)
 

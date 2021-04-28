@@ -5,11 +5,11 @@ import {verifyAuth} from '../middleware/authVerification';
 
 const categoryRouter = express.Router();
 
-categoryRouter.post('/create',verifyAuth,validator.verifyRole('jobSeeker'), CategoryController.createCategory);
-categoryRouter.get('/all',verifyAuth, CategoryController.getAllCategory);
-categoryRouter.get('/getOne/:id',verifyAuth, CategoryController.getOneCategory);
-categoryRouter.delete('/delete/:id',verifyAuth, CategoryController.deleteOneCategory);
-categoryRouter.patch('/update/:id',verifyAuth, CategoryController.updateCategory)
+categoryRouter.post('/category/create',verifyAuth,validator.verifyRole('jobProvider'), CategoryController.createCategory);
+categoryRouter.get('/category',verifyAuth, CategoryController.getAllCategory);
+categoryRouter.get('/category/:id',verifyAuth, CategoryController.getOneCategory);
+categoryRouter.delete('/category/:id',verifyAuth, CategoryController.deleteOneCategory);
+categoryRouter.patch('/category/:id',verifyAuth, CategoryController.updateCategory)
 
 
 export default categoryRouter;

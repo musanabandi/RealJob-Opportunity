@@ -1,14 +1,33 @@
 import { check, validationResult } from "express-validator";
 import UserData from "../model/UserModel";
 import Response from "../helpers/response";
+import categoryInfos from "../model/categoryModal";
 class validator {
 
+    static checkCategory = async(req,res,next)=>{
+        let {categoryId} = req.body;
+
+        categoryId.forEach(async(element) => {
+            
+        const isCategoryExist= await categoryInfos.findById(element);
+
+        if(!isCategoryExist){
+            return Response.errorMessage(res, "Category does Not Exist", 404)
+
+        }
+        });
+
+        
+        next();
+
+    }
 
     
     static verifyAccess = async (req, res, next) => {
 
         const userIdFromToken = req.body.userId;
-        
+
+      
         const profile = await UserData.findById(userIdFromToken);        
                         if (!profile) {
         

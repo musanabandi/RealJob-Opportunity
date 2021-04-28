@@ -9,44 +9,44 @@ import Response from "../helpers/response";
 class UserAuthantication {
 
 
-    static changePassword = async (req,res)=>{
+    static changePassword = async (req, res) => {
 
         let {
             oldPassword,
             newPassword,
             confirmPassword
-            
-        }=req.body;
+
+        } = req.body;
 
         const userId = req.body.userId;
         const userDetails = await UserData.findById(userId);
-        
 
-        if(bcrypt.compareSync(oldPassword, userDetails.password)){
 
-            if(newPassword === confirmPassword){
- 
+        if (bcrypt.compareSync(oldPassword, userDetails.password)) {
+
+            if (newPassword === confirmPassword) {
+
                 const password = bcrypt.hashSync(newPassword, 15);
                 const passwordChangedTime = Date.now()
-                const userUpdated = await UserData.findByIdAndUpdate(userId,{
+                const userUpdated = await UserData.findByIdAndUpdate(userId, {
 
-                    password:password,
+                    password: password,
                     passwordChangedTime: passwordChangedTime
 
 
                 })
-        return Response.successMessage(res,"Password Has Changed",userUpdated,200)
+                return Response.successMessage(res, "Password Has Changed", userUpdated, 200)
             }
-        return Response.errorMessage(res, "New Password And Confirm Password Not Match",404)
+            return Response.errorMessage(res, "New Password And Confirm Password Not Match", 404)
         }
-        return Response.errorMessage(res, "Old Password Provided Is Invalid",417)
+        return Response.errorMessage(res, "Old Password Provided Is Invalid", 417)
 
     }
 
     //sign up
 
     static signup = async (req, res) => {
-      
+
         let {
             firstName,
             lastName,
@@ -57,42 +57,42 @@ class UserAuthantication {
             phone,
             role,
             isActive
-            
-           
+
+
 
         } = req.body;
 
 
         password = bcrypt.hashSync(password, 15)
 
-        const isEmailExist = await UserData.findOne({email:email}||{phone:phone});
+        const isEmailExist = await UserData.findOne({ email: email } || { phone: phone });
 
         if (isEmailExist) {
 
-           return  Response.errorMessage(res,"Email or Phone Number Is Duplicated",409) 
+            return Response.errorMessage(res, "Email or Phone Number Is Duplicated", 409)
 
         }
 
 
 
-        req.body.password= password;
+        req.body.password = password;
         const data = await UserData.create(req.body);
 
 
 
         if (!data) {
 
-            return Response.errorMessage(res,"Signup Failed",417)
+            return Response.errorMessage(res, "Signup Failed", 417)
 
-           
+
         }
 
         else {
             let { password, ...datawithoutpassword } = data._doc;
             await EmailHelper.userWelcomeEmail(datawithoutpassword);
 
-            
-         return Response.successMessage(res, "Account Created Succesfully",datawithoutpassword,201)
+
+            return Response.successMessage(res, "Account Created Succesfully", datawithoutpassword, 201)
 
 
         }
@@ -101,21 +101,22 @@ class UserAuthantication {
 
     }
 
-    
+
 
     static signin = async (req, res) => {
 
 
         let { email, phone, password } = req.body;
 
-        let isUserExist =await UserData.findOne({email:email});
+        let isUserExist = await UserData.findOne({ email: email });
 
-        if(!isUserExist){
+        if (!isUserExist) {
 
-        isUserExist =await UserData.findOne({phone:phone});}
+            isUserExist = await UserData.findOne({ phone: phone });
+        }
 
 
-       if (isUserExist && bcrypt.compareSync(password, isUserExist.password)) {
+        if (isUserExist && bcrypt.compareSync(password, isUserExist.password)) {
 
             const data = isUserExist;
 
@@ -126,7 +127,7 @@ class UserAuthantication {
             const token = generateAuthToken({
                 id: data.id,
                 email: data.email,
-                phone:data.phone,
+                phone: data.phone,
                 role: data.role,
                 passwordChangedTime: data.passwordChangedTime
             });
@@ -134,17 +135,17 @@ class UserAuthantication {
             let { password, ...userData } = data._doc;
 
 
-           return  Response.successMessage(res, " Login Created Succesfully",{token},201)
+            return Response.successMessage(res, " Login Created Succesfully", { token }, 201)
 
-          
+
         }
 
-        
-        return Response.errorMessage(res,"Password User Entered Is Incorrect!",404)
 
-    
+        return Response.errorMessage(res, "Password User Entered Is Incorrect!", 404)
+
+
     }
 
 }
 
-export default { UserAuthantication};
+export default { UserAuthantication };
