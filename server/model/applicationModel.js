@@ -1,9 +1,13 @@
 import mongoose from 'mongoose'
 const applicationSchema = new mongoose.Schema(
   {
-    jobId: { type: String }, //required: [true] },
+    jobId: { type: mongoose.Schema.ObjectId,
+    ref:"jobPost",
+  required:[true, "jobId is required"] 
+}, 
+
     userId: {
-      type: String,
+      type: mongoose.Schema.ObjectId,
       ref: "user",
       required: [true, "user is required"]
     },
@@ -23,6 +27,7 @@ const applicationSchema = new mongoose.Schema(
     }
 
   })
+
 applicationSchema.pre(/^find/, function (next) {
   this.populate({
     path: "userId",
@@ -30,11 +35,6 @@ applicationSchema.pre(/^find/, function (next) {
   })
   next();
 })
-
-
-
-
-
 
 const applicationData = mongoose.model("application", applicationSchema);
 export default applicationData;
