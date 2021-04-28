@@ -4,7 +4,7 @@ dotenv.config()
 const {EMAIL_ADDRESS}= process.env;
 class Email{
 static WelcomeEmail(user){
-    console.log(user)
+    // console.log(user)
     return{
         to: user.email,
         subject: "urakaza neza mu isi nshya",

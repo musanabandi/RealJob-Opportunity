@@ -5,12 +5,12 @@ const jobPostSchema = new mongoose.Schema(
 
         jobDescription: { type: String, required: true},
 
-        categoryId: { type:mongoose.Schema.ObjectId,
+        categoryId: [{ type:mongoose.Schema.ObjectId,
 
             ref:"category",
             required:[true, "jobCategory id is required"]
             
-        },
+        }],
 
         userId: { type:mongoose.Schema.ObjectId,
             ref:"user",
@@ -62,6 +62,18 @@ const jobPostSchema = new mongoose.Schema(
 
     }
 );
+
+jobPostSchema.pre(/^find/, function(next){
+
+    this.populate({
+        path:"categoryId",
+        select:"categoryName description -userId"
+    })
+    
+  
+    next();
+  
+  })
 
 const jobPostData=mongoose.model("jobPost", jobPostSchema);
 export default jobPostData;

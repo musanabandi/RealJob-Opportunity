@@ -15,11 +15,11 @@ const app = express();
 
 app.use(bodyParse.json());
 app.use('/api/v1/realJob',AuthRoute);
-app.use('/api/v1/category/dash',categoryRoute);
-app.use('/api/v1/profile',profileRoute);
+app.use('/api/v1/realJob',categoryRoute);
+app.use('/api/v1/realJob',profileRoute);
 
-app.use('/api/v1/jobPost',jobRoute);
-app.use('/api/v1/application',applicationRoute);
+app.use('/api/v1/realJob',jobRoute);
+app.use('/api/v1/realJob',applicationRoute);
 
 app.use('/',(req,res)=>{
 
