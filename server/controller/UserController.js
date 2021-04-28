@@ -1,7 +1,7 @@
 import UserData from '../model/UserModel';
 import { generateAuthToken } from "../helpers/token";
 import bcrypt from "bcrypt";
-import EmailHelper from "../Helpers/emailTemplate"
+import EmailHelper from "../helpers/emailTemplate"
 import Response from "../helpers/response";
 
 
