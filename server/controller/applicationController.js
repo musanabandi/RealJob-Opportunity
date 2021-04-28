@@ -1,5 +1,5 @@
 import applicationData from '../model/applicationModel';
-import Response from '../Helpers/response';
+import Response from '../helpers/response';
 import jobPostData from '../model/jobModel';
 class applyController {
 
