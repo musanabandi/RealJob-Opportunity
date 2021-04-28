@@ -1,10 +1,13 @@
 import jobPostData from '../model/jobModel';
+
 import Response from "../helpers/response";
+import sendSms from "../helpers/sms";
+import sms from '../helpers/sms';
 
 
 
 class jobController {
-   
+
     static createjobpost = async (req, res) => {
         let {
             jobTitle,
@@ -18,122 +21,124 @@ class jobController {
 
         const data = await jobPostData.create(req.body);
         if (!data) {
-            return Response.errorMessage(res,"jobPost failed to be created", 417)
+            return Response.errorMessage(res, "jobPost failed to be created", 417)
         }
-         return Response.successMessage(res, "jobPost created is successfull",{data},201)
-  
-  }
-      
-  static getAllpostedJob = async(req, res) => {
-      const jobpostId=req.body.jobpostId;
-      const data = await jobPostData.find({jobpostId:jobpostId});
+        return Response.successMessage(res, "jobPost created is successfull", { data }, 201)
 
-return Response.successMessage(res, "This is All posted jobs",{data},200)
-};
+    }
 
+    static getAllpostedJob = async (req, res) => {
+        const jobpostId = req.body.jobpostId;
+        const data = await jobPostData.find({ jobpostId: jobpostId });
 
-static getAllapplicants = async(req, res) => {
-    const applicationId=req.body.applicationId;
-    const data = await jobPostData.find({applicationId:applicationId});
-
-return Response.successMessage(res, "This is All application received ",{data},200)
-}
+        return Response.successMessage(res, "This is All posted jobs", { data }, 200)
+    };
 
 
+    static getAllapplicants = async (req, res) => {
+        const applicationId = req.body.applicationId;
+        const data = await jobPostData.find({ applicationId: applicationId });
 
-    static deleteOnepostedJob= async(req,res)=>{
-        const jobPostId= req.params.id;
+        return Response.successMessage(res, "This is All application received ", { data }, 200)
+    }
+
+
+
+    static deleteOnepostedJob = async (req, res) => {
+        const jobPostId = req.params.id;
 
         const data = await jobPostData.findByIdAndDelete(jobPostId);
-        
+
         if (!data) {
 
 
-    return  Response.errorMessage(res," Failed To Delete posted job",417) 
+            return Response.errorMessage(res, " Failed To Delete posted job", 417)
 
         }
 
-    return Response.successMessage(res, "posted job  Deleted Succesfully",{jobPostId},201)
+        return Response.successMessage(res, "posted job  Deleted Succesfully", { jobPostId }, 201)
 
     }
 
-    static updatepostedJob= async (req,res)=>{
+    static updatepostedJob = async (req, res) => {
 
-        const jobPostId=req.params.id;
+        const jobPostId = req.params.id;
 
-        let{
+        let {
             jobTitle,
             jobDescription,
             isActive
-     } =req.body;
+        } = req.body;
 
-        const data= await jobPostData.findByIdAndUpdate(jobPostId, {
-            jobTitle :jobTitle,
-            jobDescription:jobDescription,
-            isActive:isActive
-            
+        const data = await jobPostData.findByIdAndUpdate(jobPostId, {
+            jobTitle: jobTitle,
+            jobDescription: jobDescription,
+            isActive: isActive
+
         });
 
-     if(!data){
+        if (!data) {
 
-    return  Response.errorMessage(res,"Updated Failed",404) 
+            return Response.errorMessage(res, "Updated Failed", 404)
 
-       
+
+        }
+
+        const jobPostUpdate = await jobPostData.findById(jobPostId);
+        return Response.successMessage(res, "Updated Successfully", { jobPostUpdate }, 201)
+
+
     }
 
-    const jobPostUpdate= await jobPostData.findById(jobPostId);
-    return Response.successMessage(res, "Updated Successfully",{jobPostUpdate},201)
-      
+    static getOnepostedJob = async (req, res) => {
 
-        }  
-     
-        static getOnepostedJob = async (req, res) => {
+        const jobPostId = req.params.id;
 
-            const jobPostId = req.params.id;
-    
-            const data = await jobPostData.findById(jobPostId )
-    
-            if (!data ) {
-    
-        return  Response.errorMessage(res,"Failed to Get One jobPost",417) 
-    
-            }
-    
-        return Response.successMessage(res, "Get one jobPost Succesfully",{data },201)
-    
-          
+        const data = await jobPostData.findById(jobPostId)
+
+        if (!data) {
+
+            return Response.errorMessage(res, "Failed to Get One jobPost", 417)
+
         }
-    
+
+        return Response.successMessage(res, "Get one jobPost Succesfully", { data }, 201)
 
 
-        static receivedpostedJob= async (req,res)=>{
-
-            const applicationId=req.params.id;
-    
-            let{
-                jobTitle
-            } =req.body;
-    
-            const data= await jobPostData.findByIdAndUpdate(applicationId, {
-                receivedStatus:'received',
-                Status:'admitted',
-                status:'rejected'
+    }
 
 
-                
-            });
-    
-         if(!data){
-    
-        return  Response.errorMessage(res,"fail",404) 
-    
-           
+
+    static receivedpostedJob = async (req, res) => {
+
+        const applicationId = req.params.id;
+
+        let {
+            jobTitle
+        } = req.body;
+
+        const data = await jobPostData.findByIdAndUpdate(applicationId, {
+            receivedStatus: 'received',
+            Status: 'admitted',
+            status: 'rejected'
+
+
+
+        });
+
+        if (!data) {
+
+            return Response.errorMessage(res, "fail", 404)
+
+
         }
-    
-        const jobPostUpdate= await jobPostData.findById(applicationId);
-        return Response.successMessage(res, "you are admitted",{data},201)
-          
-    
-            } 
-        }
+
+        const jobPostUpdate = await jobPostData.findById(applicationId);
+
+        sms("+250787082328");
+        return Response.successMessage(res, "you are admitted", { data }, 201)
+
+
+    }
+}
 export default jobController;
