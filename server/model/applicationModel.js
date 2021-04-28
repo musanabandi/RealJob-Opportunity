@@ -1,10 +1,17 @@
 import mongoose from 'mongoose'
 const applicationSchema = new mongoose.Schema(
   {
+
+    jobId: { type: mongoose.Schema.ObjectId, 
+      ref:"jobPost",
+      required: [true, "jobId is required"]
+     },
+
     jobId: { type: mongoose.Schema.ObjectId,
     ref:"jobPost",
   required:[true, "jobId is required"] 
 }, 
+
 
     userId: {
       type: mongoose.Schema.ObjectId,

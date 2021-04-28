@@ -1,5 +1,7 @@
 import jobPostData from '../model/jobModel';
 
+import applicationData from '../model/applicationModel'
+
 import Response from "../helpers/response";
 import sendSms from "../helpers/sms";
 import sms from '../helpers/sms';
@@ -84,6 +86,28 @@ class jobController {
 
         }
 
+
+        static receivedpostedJob= async (req,res)=>{
+
+            const applicationId=req.params.id;
+    
+            let{
+                jobTitle
+            } =req.body;
+    
+            const data= await applicationData.findByIdAndUpdate(applicationId, {
+                receivedStatus:'received',
+                Status:'admitted',
+                status:'rejected'
+});
+    
+         if(!data){
+    
+        return  Response.errorMessage(res,"you are rejected",404) 
+    
+           
+
+
         const jobPostUpdate = await jobPostData.findById(jobPostId);
         return Response.successMessage(res, "Updated Successfully", { jobPostUpdate }, 201)
 
@@ -99,6 +123,7 @@ class jobController {
         if (!data) {
 
             return Response.errorMessage(res, "Failed to Get One jobPost", 417)
+
 
         }
 
