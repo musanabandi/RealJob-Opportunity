@@ -39,12 +39,20 @@ const jobPostSchema = new mongoose.Schema(
             enum: ["admitted","rejected"]
         },
         
+
         applicants :[ {
             type: mongoose.Schema.ObjectId,
             ref:"application",
            required:[true, "applicationId is required"]
         }],
         
+
+        /*applicationId : {
+            type: mongoose.Schema.ObjectId,
+            ref:"application",
+           required:[true, "applicationId is required"]
+        },*/
+
 
         profileId : {
             type: mongoose.Schema.ObjectId,
@@ -63,6 +71,6 @@ export default jobPostData;
 
 
 
-
+ 
  
 
