@@ -1,5 +1,6 @@
 import applicationData from '../model/applicationModel';
 import Response from '../Helpers/response';
+import jobPostData from '../model/jobModel';
 class applyController {
 
     static createApplication = async (req, res) => {
@@ -10,16 +11,20 @@ class applyController {
         } = req.body;
         
         const timestamp = new Date(Date.now());
-
-
         const data = await applicationData.create(req.body);
-
-
-        if (!data) {
+if (!data) {
             return Response.errorMessage(res,"application failed to be created", 417)
-           
-        }
-         return Response.successMessage(res, "application created is successfull", {data},201)}
+           }
+        
+           let jobPostIdFromParams = req.params.id;
+        const newApplicant = await applicationData.create(req.body);
+        const jobApplicant = await jobPostData.findByIdAndUpdate(jobPostIdFromParams,
+        {$push: {
+            applicationId:newApplicant._id
+        }})
+
+        
+return Response.successMessage(res, "application created is successfull", {data},201)}
 
     static getAllApplication = async (req, res) => {
         

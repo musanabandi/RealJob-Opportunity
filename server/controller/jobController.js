@@ -1,4 +1,5 @@
 import jobPostData from '../model/jobModel';
+import applicationData from '../model/applicationModel'
 import Response from "../helpers/response";
 
 
@@ -114,18 +115,15 @@ return Response.successMessage(res, "This is All application received ",{data},2
                 jobTitle
             } =req.body;
     
-            const data= await jobPostData.findByIdAndUpdate(applicationId, {
+            const data= await applicationData.findByIdAndUpdate(applicationId, {
                 receivedStatus:'received',
                 Status:'admitted',
                 status:'rejected'
-
-
-                
-            });
+});
     
          if(!data){
     
-        return  Response.errorMessage(res,"fail",404) 
+        return  Response.errorMessage(res,"you are rejected",404) 
     
            
         }
