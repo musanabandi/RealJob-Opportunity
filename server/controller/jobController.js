@@ -118,11 +118,11 @@ class jobController {
                 sendingStatus: "received",
                 status: "admitted"
             })
-            const applicationData = await applicationinfo.findById(appId);
+            const applicationData = await applicationInfo.findById(appId);
 
             const userData = await userInfo.findById(applicationData.userId);
 
-            // sendSms(userData.phone, userData.firstName);
+            sendSms(userData.phone, userData.firstName);
 
         });
 
