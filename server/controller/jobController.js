@@ -1,13 +1,13 @@
 import jobPostData from '../model/jobModel';
 import Response from "../helpers/response";
-import applicationinfo from "../model/applicationModel";
+import applicationInfo from "../model/applicationModel";
 import userInfo from "../model/UserModel";
-
 import sendSms from "../helpers/sms";
 
 
 
 class jobController {
+
 
     static createjobpost = async (req, res) => {
         let {
@@ -18,9 +18,8 @@ class jobController {
         const postedTime = new Date(Date.now());
 
         const postedDeadLineTime = new Date(Date.now());
-
-
         const data = await jobPostData.create(req.body);
+
         if (!data) {
             return Response.errorMessage(res, "jobPost failed to be created", 417)
         }
@@ -28,7 +27,8 @@ class jobController {
 
     }
 
-    static getAllpostedJob = async (req, res) => {
+
+    static getAllJob = async (req, res) => {
         const jobpostId = req.body.jobpostId;
         const data = await jobPostData.find({ jobpostId: jobpostId });
 
@@ -44,14 +44,27 @@ class jobController {
     }
 
 
+    static getApplicants = async (req, res) => {
+        const jobpostId = req.params.id;
 
-    static deleteOnepostedJob = async (req, res) => {
+        const data = await jobPostData.findById(jobpostId);
+
+        if (!data) {
+            return Response.errorMessage(res, "there is no  one application", 417)
+
+        }
+        return Response.successMessage(res, "This is All applicant received on yr particular job posted", { data }, 201)
+
+    }
+
+
+
+    static deleteJob = async (req, res) => {
         const jobPostId = req.params.id;
 
         const data = await jobPostData.findByIdAndDelete(jobPostId);
 
         if (!data) {
-
 
             return Response.errorMessage(res, " Failed To Delete posted job", 417)
 
@@ -61,7 +74,9 @@ class jobController {
 
     }
 
-    static updatepostedJob = async (req, res) => {
+
+
+    static updateJob = async (req, res) => {
 
         const jobPostId = req.params.id;
 
@@ -87,76 +102,54 @@ class jobController {
 
         const jobPostUpdate = await jobPostData.findById(jobPostId);
         return Response.successMessage(res, "Updated Successfully", { jobPostUpdate }, 201)
-
-
     }
 
-    static getOnepostedJob = async (req, res) => {
-
-        const jobPostId = req.params.id;
-
-        const data = await jobPostData.findById(jobPostId)
-
-        if (!data) {
-
-            return Response.errorMessage(res, "Failed to Get One jobPost", 417)
-
-        }
-
-        return Response.successMessage(res, "Get one jobPost Succesfully", { data }, 201)
 
 
-    }
+    static okReplyApplicant = async (req, res) => {
+        const { applicationId } = req.body;
 
-    static okReplyApplicant =async(req,res)=>{
-        const {applicationId} = req.body;
+        console.log(applicationId);
 
-        applicationId.forEach(async(appId) => {
+        applicationId.forEach(async (appId) => {
 
-            await applicationinfo.findByIdAndUpdate(appId,{
-                sendingStatus:"received",
-                status:"admitted"
+            await applicationInfo.findByIdAndUpdate(appId, {
+                
+                sendingStatus: "received",
+                status: "admitted"
             })
-           const applicationData= await applicationinfo.findById(appId);
+            const applicationData = await applicationInfo.findById(appId);
 
-           const userData = await userInfo.findById(applicationData.userId);
+            const userData = await userInfo.findById(applicationData.userId);
 
-        //    console.log("callllllllllllllllllllll",userData.phone);
+            sendSms(userData.phone, userData.firstName);
 
-           sendSms(userData.phone,userData.firstName);
-
-           
         });
-        return Response.successMessage(res, "admitted succefully", { data:"thank you" }, 201)
+
+        return Response.successMessage(res, "admitted succefully", { data: "congratulation Dear, you are higly welcomed." }, 201)
 
     }
 
 
-    static receivedpostedJob = async (req, res) => {
 
-        const applicationId = req.params.id;
+    static noReplyApplicant = async (req, res) => {
+        const { applicationId } = req.body;
 
-        let {
-            jobTitle
-        } = req.body;
+        applicationId.forEach(async (applyId) => {
 
-        const data = await jobPostData.findByIdAndUpdate(applicationId, {
-            receivedStatus: 'received',
-            Status: 'admitted',
-            status: 'rejected'
+            await applicationinfo.findByIdAndUpdate(applyId, {
+                sendingStatus: "received",
+                status: "rejected"
+            })
+            const applicationsData = await applicationinfo.findById(applyId);
+
+            const usersData = await userInfo.findById(applicationsData.userId);
+
+            sendSms(usersData.phone, usersData.firstName);
+
         });
-        // console.log(applicationId);
 
-        if (!data) {
-
-            return Response.errorMessage(res, "you are rejected", 404)
-
-
-        }
-
-        const jobPostUpdate = await jobPostData.findById(applicationId);
-        return Response.successMessage(res, "you are admitted", { data }, 201)
-
+        return Response.successMessage(res, "You are Rejected", { data: "Sorry you have to try other Opportunity" }, 201)
 
     }
 }

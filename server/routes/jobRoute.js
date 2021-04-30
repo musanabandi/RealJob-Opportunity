@@ -6,20 +6,20 @@ import { verifyAuth } from '../middleware/authVerification';
 
 
 const jobRouter = express.Router();
-jobRouter.post('/job/create', verifyAuth, validator.checkCategory, jobController.createjobpost);
+jobRouter.post('/job/create', verifyAuth, validator.verifyRole('jobProvider'), validator.checkCategory, jobController.createjobpost);
 
-jobRouter.get('/job', verifyAuth, jobController.getAllpostedJob);
-jobRouter.delete('/job/:id', verifyAuth, jobController.deleteOnepostedJob);
+jobRouter.get('/job', verifyAuth, jobController.getAllJob);
 
-jobRouter.get('/job/:id', verifyAuth, jobController.getOnepostedJob);
+jobRouter.get('/job/applicant', verifyAuth, jobController.getAllapplicants);
 
-jobRouter.patch('/job/:id', verifyAuth, jobController.updatepostedJob)
+jobRouter.delete('/job/:id', verifyAuth, jobController.deleteJob);
 
-jobRouter.get('/job/applicant', verifyAuth, jobController.getAllpostedJob);
-// jobRouter.patch('/applicationstatus/:id', verifyAuth, jobController.receivedpostedJob)
+jobRouter.patch('/job/:id', verifyAuth, jobController.updateJob)
 
-
+jobRouter.get('/job/:id', verifyAuth, jobController.getApplicants);
 jobRouter.post("/job/admit", jobController.okReplyApplicant);
+
+jobRouter.post("/job/reject", jobController.noReplyApplicant);
 
 
 

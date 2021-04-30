@@ -22,18 +22,21 @@ const jobPostSchema = new mongoose.Schema(
             type: String,
             default: Date.now()
         },
+
         postedDeadLine: {
             type: String,
             default: Date.now()
         },
+
         isActive: {
             type: String
         },
 
         receivedStatus:{
             type:String,
-            enum: ["received"]
+            default: "received"
         },
+        
         Status:{
             type:String,
             enum: ["admitted","rejected"]
@@ -44,24 +47,12 @@ const jobPostSchema = new mongoose.Schema(
             type: mongoose.Schema.ObjectId,
             ref:"application",
            required:[true, "applicationId is required"]
-        }],
-        
-
-        /*applicationId : {
-            type: mongoose.Schema.ObjectId,
-            ref:"application",
-           required:[true, "applicationId is required"]
-        },*/
+        }]        
 
 
-        profileId : {
-            type: mongoose.Schema.ObjectId,
-            ref:"profile",
-           required:[true, "profileId is required"]
-        }
+    })
 
-    }
-);
+
 
 jobPostSchema.pre(/^find/, function(next){
 
@@ -69,7 +60,13 @@ jobPostSchema.pre(/^find/, function(next){
         path:"categoryId",
         select:"categoryName description -userId"
     })
-    
+
+
+    this.populate({
+        path:"userId",
+        select:"firstName lastName phone"
+    })
+
   
     next();
   

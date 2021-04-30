@@ -9,11 +9,11 @@ const client = require('twilio')(accountSid, authToken);
 
 
 export default function sendSms(phone,firstName){
-
+console.log(firstName)
     client.messages
     .create({
-       body: firstName+ ' You are admitted to Job',
-       from: '+14439798180',
+       body: 'Hey' +firstName+ ' You are admitted to job you have been applied, so be ready to start your job please',
+       from: '+18134128236',
        to: phone
      })
     .then(message => console.log(message.sid));
