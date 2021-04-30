@@ -65,17 +65,21 @@ class UserAuthantication {
 
         password = bcrypt.hashSync(password, 15)
 
-        const isEmailExist = await UserData.findOne({ email: email } || { phone: phone });
+        const isEmailExist = await UserData.findOne({ email: email });
 
         if (isEmailExist) {
 
-            return Response.errorMessage(res, "Email or Phone Number Is Duplicated", 409)
+            return Response.errorMessage(res, "Email  Is Duplicated", 409)
 
         }
+    const isPhoneExist = await UserData.findOne({ phone: phone });
 
+         if  (isPhoneExist) {
 
+            return Response.errorMessage(res, "Phone Number Is Duplicated", 409)
 
-        req.body.password = password;
+        }
+    req.body.password = password;
         const data = await UserData.create(req.body);
 
 

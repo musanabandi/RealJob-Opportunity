@@ -2,11 +2,17 @@ import mongoose from 'mongoose'
 const applicationSchema = new mongoose.Schema(
   {
 
-    jobId: {
+    jobId: [{
       type: mongoose.Schema.ObjectId,
       ref: "jobPost",
       required: [true, "jobId is required"]
-    },
+    }],
+
+    profileId: [{
+      type: mongoose.Schema.ObjectId,
+      ref: "profile",
+      required: [true, "ProfileId is required"]
+    }],
 
     userId: {
       type: mongoose.Schema.ObjectId,
@@ -31,12 +37,21 @@ const applicationSchema = new mongoose.Schema(
   })
 
 applicationSchema.pre(/^find/, function (next) {
+  
   this.populate({
     path: "userId",
     select: "firstName email telephone"
-  }).populate({
+
+  })
+
+  this.populate({
     path:"jobId"
   })
+
+  this.populate({
+    path:"profileId"
+  })
+
   next();
 })
 

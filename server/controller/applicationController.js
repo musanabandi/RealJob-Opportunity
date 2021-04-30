@@ -10,8 +10,10 @@ class applyController {
             return Response.errorMessage(res, "application failed to be created", 417)
         }
 
-        let {jobId} = req.body;
-        // console.log(">>>>>",data);
+
+
+        let { jobId } = req.body;
+
         const jobApplicant = await jobPostData.findByIdAndUpdate(jobId,
             {
                 $push: {
@@ -26,24 +28,13 @@ class applyController {
     static getAllApplication = async (req, res) => {
 
         const userId = req.body.userId;
-        // console.log(userId)
+        
         const data = await applicationData.find({ userId: userId });
         return Response.successMessage(res, "this is all your applications", { data }, 200)
 
     }
 
-    static getOneApplication = async (req, res) => {
-        const applicationid = req.params.id;
-
-        const data = await applicationData.findById(applicationid);
-
-        if (!data) {
-            return Response.errorMessage(res, "there is no  one application", 417)
-
-        }
-        return Response.successMessage(res, "you have got one Application", { data }, 201)
-
-    }
+    
 
     static deleteOneApplication = async (req, res) => {
         const applicationid = req.params.id;
