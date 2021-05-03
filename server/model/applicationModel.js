@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 const applicationSchema = new mongoose.Schema(
+
   {
 
     jobId: [{
@@ -37,7 +38,7 @@ const applicationSchema = new mongoose.Schema(
   })
 
 applicationSchema.pre(/^find/, function (next) {
-  
+
   this.populate({
     path: "userId",
     select: "firstName email telephone"
@@ -45,11 +46,11 @@ applicationSchema.pre(/^find/, function (next) {
   })
 
   this.populate({
-    path:"jobId"
+    path: "jobId"
   })
 
   this.populate({
-    path:"profileId"
+    path: "profileId"
   })
 
   next();

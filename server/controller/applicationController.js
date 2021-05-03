@@ -25,20 +25,55 @@ class applyController {
         return Response.successMessage(res, "application created is successfull", { data }, 201)
     }
 
-    static getAllApplication = async (req, res) => {
+//get one application using ID from params
+
+static getOneApplication = async (req, res) => {
+
+    const applicationId = req.params.id;
+
+    const application = await applicationData.findById(applicationId)
+
+    if (!application ) {
+
+return  Response.errorMessage(res,"Failed to Get One application",417) 
+
+    }
+
+return Response.successMessage(res, "Application  Created Succesfully",{application },201)
+
+  
+}
+
+// get all application
+
+static getAllApplication = async(req, res) => {
+    
+    const application = await applicationData.find();
+
+
+return Response.successMessage(res, "This is All Application",{application},200)
+
+
+}
+
+
+
+//get one application using userId
+
+    static getMyApplication = async (req, res) => {
 
         const userId = req.body.userId;
         
         const data = await applicationData.find({ userId: userId });
-        return Response.successMessage(res, "this is all your applications", { data }, 200)
+        return Response.successMessage(res, "This Is My applications", { data }, 200)
 
     }
 
     
 
     static deleteOneApplication = async (req, res) => {
-        const applicationid = req.params.id;
-        const data = await applicationData.findByIdAndDelete(applicationid);
+        const applicationId = req.params.id;
+        const data = await applicationData.findByIdAndDelete(applicationId);
 
 
         if (!data) {
@@ -51,7 +86,7 @@ class applyController {
 
 
     static cancelApplication = async (req, res) => {
-        const applicationid = req.params.id;
+        const applicationId = req.params.id;
 
         let {
             jobTitle
@@ -59,7 +94,7 @@ class applyController {
 
 
 
-        const data = await applicationData.findByIdAndUpdate(applicationid, {
+        const data = await applicationData.findByIdAndUpdate(applicationId, {
             sendingStatus: 'canceled',
             status: 'canceled'
 
@@ -73,7 +108,7 @@ class applyController {
 
 
 
-        const applicationUpdated = await applicationData.findById(applicationid)
+        const applicationUpdated = await applicationData.findById(applicationId)
         return Response.successMessage(res, "cancel is successfully", { data }, 200)
 
     }

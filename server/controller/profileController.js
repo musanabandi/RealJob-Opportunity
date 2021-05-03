@@ -42,7 +42,7 @@ class ProfileController {
 
         }
 
-    return Response.successMessage(res, "Profile  Created Succesfully",{profile },201)
+    return Response.successMessage(res, " To Get One Profile  Created Succesfully",{profile },201)
 
       
     }
