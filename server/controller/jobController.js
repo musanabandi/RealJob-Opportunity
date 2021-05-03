@@ -29,11 +29,29 @@ class jobController {
 
 
     static getAllJob = async (req, res) => {
-        const jobpostId = req.body.jobpostId;
-        const data = await jobPostData.find({ jobpostId: jobpostId });
+        const data = await jobPostData.find();
 
         return Response.successMessage(res, "This is All posted jobs", { data }, 200)
     };
+
+
+    static getOneJob = async (req, res) => {
+
+        const jobId = req.params.id;
+
+        const job = await jobPostData.findById(jobId )
+
+        if (!job ) {
+
+    return  Response.errorMessage(res,"Failed to Get One Job",417) 
+
+        }
+
+    return Response.successMessage(res, "To Get One Job  Created Succesfully",{job },201)
+
+      
+    }
+
 
 
     static getAllapplicants = async (req, res) => {
@@ -50,7 +68,7 @@ class jobController {
         const data = await jobPostData.findById(jobpostId);
 
         if (!data) {
-            return Response.errorMessage(res, "there is no  one application", 417)
+            return Response.errorMessage(res, "There is no  one application", 417)
 
         }
         return Response.successMessage(res, "This is All applicant received on yr particular job posted", { data }, 201)

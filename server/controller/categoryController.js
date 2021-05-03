@@ -40,7 +40,7 @@ class CategoryController {
 
         }
 
-    return Response.successMessage(res, "Category  Created Succesfully",{category },201)
+    return Response.successMessage(res, " To Get One Category  Created Succesfully",{category },201)
 
       
     }
