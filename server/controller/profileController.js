@@ -42,7 +42,7 @@ class ProfileController {
 
         }
 
-    return Response.successMessage(res, " To Get One Profile  Created Succesfully",{profile },201)
+    return Response.successMessage(res, " this is  One Profile",{profile },201)
 
       
     }
@@ -54,7 +54,7 @@ class ProfileController {
         const profile = await profileInfo.find();
 
 
-    return Response.successMessage(res, "This is All Profile",{profile},200)
+    return Response.successMessage(res, "These are All Profile",{profile},200)
 
 
     }

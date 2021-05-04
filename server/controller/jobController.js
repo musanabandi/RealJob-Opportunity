@@ -47,7 +47,7 @@ class jobController {
 
         }
 
-    return Response.successMessage(res, "To Get One Job  Created Succesfully",{job },201)
+    return Response.successMessage(res, "this is One Job ",{job },201)
 
       
     }
@@ -58,7 +58,7 @@ class jobController {
         const applicationId = req.body.applicationId;
         const data = await jobPostData.find({ applicationId: applicationId });
 
-        return Response.successMessage(res, "This is All application received ", { data }, 200)
+        return Response.successMessage(res, "These are All applications received ", { data }, 200)
     }
 
 
@@ -71,7 +71,7 @@ class jobController {
             return Response.errorMessage(res, "There is no  one application", 417)
 
         }
-        return Response.successMessage(res, "This is All applicant received on yr particular job posted", { data }, 201)
+        return Response.successMessage(res, "These  are All applicants received on yr particular job posted", { data }, 201)
 
     }
 
