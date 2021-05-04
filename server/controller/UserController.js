@@ -35,7 +35,7 @@ class UserAuthantication {
 
 
                 })
-                return Response.successMessage(res, "Password Has Changed", userUpdated, 200)
+                return Response.successMessage(res, "Password Has  been Changed", userUpdated, 200)
             }
             return Response.errorMessage(res, "New Password And Confirm Password Not Match", 404)
         }

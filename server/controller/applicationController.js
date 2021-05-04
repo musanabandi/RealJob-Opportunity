@@ -25,7 +25,6 @@ class applyController {
         return Response.successMessage(res, "application created is successfull", { data }, 201)
     }
 
-//get one application using ID from params
 
 static getOneApplication = async (req, res) => {
 
@@ -51,21 +50,19 @@ static getAllApplication = async(req, res) => {
     const application = await applicationData.find();
 
 
-return Response.successMessage(res, "This is All Application",{application},200)
+return Response.successMessage(res, "These are All Applications",{application},200)
 
 
 }
 
 
 
-//get one application using userId
-
     static getMyApplication = async (req, res) => {
 
         const userId = req.body.userId;
         
         const data = await applicationData.find({ userId: userId });
-        return Response.successMessage(res, "This Is My applications", { data }, 200)
+        return Response.successMessage(res, "These are all my applications", { data }, 200)
 
     }
 

@@ -17,11 +17,11 @@ class CategoryController {
         if (!category ) {
 
 
-        return  Response.errorMessage(res,"Category  Failed to be Created",417) 
+        return  Response.errorMessage(res,"Category Failed to be Created",417) 
               
         }
 
-        return Response.successMessage(res, "Category   Created Succesfully",{category},201)
+        return Response.successMessage(res, "created of category is Succesfully",{category},201)
 
     }
 
@@ -40,7 +40,7 @@ class CategoryController {
 
         }
 
-    return Response.successMessage(res, " To Get One Category  Created Succesfully",{category },201)
+    return Response.successMessage(res, "this is  One Category",{category },201)
 
       
     }
@@ -52,7 +52,7 @@ class CategoryController {
         const Category = await categoryInfo.find();
 
 
-    return Response.successMessage(res, "This is All Category",{Category},200)
+    return Response.successMessage(res, "These are All Category",{Category},200)
 
 
     }
