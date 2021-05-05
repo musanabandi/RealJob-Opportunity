@@ -8,11 +8,11 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
 
 
-export default function sendSms(phone,firstName){
+export default function sendSms(phone,firstName,message){
 console.log(firstName)
     client.messages
     .create({
-       body: 'Hey' +firstName+ ' You are admitted to job you have been applied, so be ready to start your job please',
+       body: 'Hey ' + firstName+ message,
        from: '+18134128236',
        to: phone
      })
@@ -21,3 +21,6 @@ console.log(firstName)
     // return message.sid;
 
 } 
+
+
+ 

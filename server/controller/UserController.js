@@ -3,6 +3,7 @@ import { generateAuthToken } from "../helpers/token";
 import bcrypt from "bcrypt";
 import EmailHelper from "../helpers/emailTemplate"
 import Response from "../helpers/response";
+import sendSms from '../helpers/sms';
 
 
 
@@ -94,7 +95,10 @@ class UserAuthantication {
         else {
             let { password, ...datawithoutpassword } = data._doc;
             await EmailHelper.userWelcomeEmail(datawithoutpassword);
-
+            
+            const message='  your account was created';
+        
+            sendSms(datawithoutpassword.phone, datawithoutpassword.firstName, message);
 
             return Response.successMessage(res, "Account Created Succesfully", datawithoutpassword, 201)
 
