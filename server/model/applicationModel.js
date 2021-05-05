@@ -21,7 +21,11 @@ const applicationSchema = new mongoose.Schema(
       required: [true, "user is required"]
     },
 
-    timeApplication: { type: String },
+    timeApplication: {
+      type: String,
+      default:Date(Date.now())
+  },
+
 
     sendingStatus: {
       type: String,

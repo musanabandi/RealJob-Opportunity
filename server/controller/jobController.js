@@ -34,44 +34,16 @@ class jobController {
         return Response.successMessage(res, "This is All posted jobs", { data }, 200)
     };
 
-
-    static getOneJob = async (req, res) => {
-
-        const jobId = req.params.id;
-
-        const job = await jobPostData.findById(jobId )
-
-        if (!job ) {
-
-    return  Response.errorMessage(res,"Failed to Get One Job",417) 
-
-        }
-
-    return Response.successMessage(res, "this is One Job ",{job },201)
-
-      
-    }
-
-
-
-    static getAllapplicants = async (req, res) => {
-        const applicationId = req.body.applicationId;
-        const data = await jobPostData.find({ applicationId: applicationId });
-
-        return Response.successMessage(res, "These are All applications received ", { data }, 200)
-    }
-
-
-    static getApplicants = async (req, res) => {
+    static getAllApplicantsOnOneJob = async (req, res) => {
         const jobpostId = req.params.id;
 
         const data = await jobPostData.findById(jobpostId);
 
         if (!data) {
-            return Response.errorMessage(res, "There is no  one application", 417)
+            return Response.errorMessage(res, "There is no  one application", 417) 
 
         }
-        return Response.successMessage(res, "These  are All applicants received on yr particular job posted", { data }, 201)
+        return Response.successMessage(res, "These  are All applicants received on your particular job posted", { data }, 201)
 
     }
 
@@ -140,11 +112,13 @@ class jobController {
 
             const userData = await userInfo.findById(applicationData.userId);
 
-            sendSms(userData.phone, userData.firstName);
+            const message='  congratulation Dear, you are higly welcomed.';
+
+            sendSms(userData.phone, userData.firstName, message);
 
         });
 
-        return Response.successMessage(res, "admitted succefully", { data: "congratulation Dear, you are higly welcomed." }, 201)
+        return Response.successMessage(res, "admitted succefully", {message: "congratulation Dear, you are higly welcomed."}, 201)
 
     }
 
@@ -155,19 +129,21 @@ class jobController {
 
         applicationId.forEach(async (applyId) => {
 
-            await applicationinfo.findByIdAndUpdate(applyId, {
+            await applicationInfo.findByIdAndUpdate(applyId, {
                 sendingStatus: "received",
                 status: "rejected"
             })
-            const applicationsData = await applicationinfo.findById(applyId);
+            const applicationsData = await applicationInfo.findById(applyId);
 
             const usersData = await userInfo.findById(applicationsData.userId);
 
-            sendSms(usersData.phone, usersData.firstName);
+            const message='  congratulation Dear, you did it well, you will try other opportunity.';
+
+            sendSms(usersData.phone, usersData.firstName, message);
 
         });
 
-        return Response.successMessage(res, "You are Rejected", { data: "Sorry you have to try other Opportunity" }, 201)
+        return Response.successMessage(res, "You are Rejected", { message: "Sorry you have to try other Opportunity" }, 201)
 
     }
 }

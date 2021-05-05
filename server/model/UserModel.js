@@ -9,11 +9,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ["male", "female"]
     },
-  
-    address: {type:String},
-    
+
+    address: { type: String },
+
     email: {
-        type: String},
+        type: String
+    },
 
 
     password: {
@@ -22,32 +23,33 @@ const userSchema = new mongoose.Schema({
     },
 
     phone: {
-        type: String },
+        type: String
+    },
 
-   
+
     role: {
         type: String,
         enum: ["jobSeeker", "jobProvider", "admin"],
 
-        required:[true, "role is required"],
-        default:"jobSeeker" 
+        required: [true, "role is required"],
+        default: "jobSeeker"
     },
 
-     isActive:{
-         type:Boolean,
-         default:true,
-         required:[true,"isActive or Not"]
+    isActive: {
+        type: Boolean,
+        default: true,
+        required: [true, "isActive or Not"]
 
-     } ,
-     
-    passwordChangedTime:{
+    },
 
-        type:String,
-        default:Date.now()
+    passwordChangedTime: {
+
+        type: String,
+        default: Date(Date.now())
     }
 });
 
-const UserData = mongoose.model("user",userSchema);
+const UserData = mongoose.model("user", userSchema);
 
 export default UserData;
 

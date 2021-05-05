@@ -20,12 +20,12 @@ const jobPostSchema = new mongoose.Schema(
         },
         postedTime: {
             type: String,
-            default: Date.now()
+            default: Date(Date.now())
         },
 
         postedDeadLine: {
             type: String,
-            default: Date.now()
+            default:Date(Date.now())
         },
 
         isActive: {
