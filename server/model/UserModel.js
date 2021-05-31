@@ -22,6 +22,11 @@ const userSchema = new mongoose.Schema({
         required: [true, "password is required"]
     },
 
+    confirmPassword: {
+        type: String,
+        required: [true, "Confirm Password is Required"]
+    },
+
     phone: {
         type: String
     },
@@ -35,18 +40,25 @@ const userSchema = new mongoose.Schema({
         default: "jobSeeker"
     },
 
-    isActive: {
-        type: Boolean,
-        default: true,
-        required: [true, "isActive or Not"]
-
+    country: {
+        type: String,
+        required: [true, "Country is required"]
     },
+
+    // isActive: {
+    //     type: Boolean,
+    //     default: true,
+    //     required: [true, "isActive or Not"]
+
+    // },
 
     passwordChangedTime: {
 
         type: String,
         default: Date(Date.now())
     }
+
+    
 });
 
 const UserData = mongoose.model("user", userSchema);
