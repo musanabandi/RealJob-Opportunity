@@ -55,9 +55,10 @@ class UserAuthantication {
             address,
             email,
             password,
+            confirmPassword,
             phone,
             role,
-            isActive
+            country
 
 
 
@@ -107,7 +108,7 @@ class UserAuthantication {
 
 
 
-    }
+    } 
 
 
 
